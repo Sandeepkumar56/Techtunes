@@ -1,0 +1,154 @@
+/* Heading */
+
+.pricing-card__heading {
+    padding: 0.7rem;
+    text-align: center;
+  }
+  
+  .pricing-card__heading,
+  .pricing-card__heading *,
+  .pricing-card__heading p,
+  .pricing-card__heading h1,
+  .pricing-card__heading h2,
+  .pricing-card__heading h3,
+  .pricing-card__heading h4,
+  .pricing-card__heading h5,
+  .pricing-card__heading h6,
+  .pricing-card__heading a,
+  .pricing-card__heading span,
+  .pricing-card__heading div,
+  .pricing-card__heading li,
+  .pricing-card__heading blockquote {
+    margin-bottom: 0;
+    color: #fff;
+  }
+  
+  /* Price */
+  
+  .pricing-card__price {
+    text-align: center;
+  }
+  
+  /* List items */
+  
+  .pricing-card__list-item {
+    margin-top: 0;
+  }
+  
+  /* List icons */
+  
+  .pricing-card__list-icon {
+    margin-right: 1rem;
+  }
+  
+  /* Overlay */
+  
+  .pricing-card__overlay-background {
+    position: fixed;
+  
+    /* One less than the overlay z-index value */
+    z-index: 999999;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.2);
+    inset: 0;
+    opacity: 0;
+    transition: opacity 500ms ease 0s, visibility 500ms ease 0s;
+    visibility: hidden;
+  }
+  
+  .pricing-card__overlay-background.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Overlay */
+  
+  html.pricing-card__payments--overlay-open {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+  }
+  
+  .pricing-card__overlay {
+    position: fixed;
+  
+    /* Well below the maximum value, but high enough to cover most cases */
+    z-index: 1000000;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: calc(100% - 50px);
+    width: 100vw;
+    background-color: #fff;
+    transform: translateY(0);
+    transition: transform 500ms ease 0s, visibility 500ms ease 0s;
+    visibility: hidden;
+  }
+  
+  .pricing-card__overlay.open {
+    transform: translateY(-100%);
+    transition: transform 500ms ease 0s, visibility 500ms ease 0s;
+    visibility: visible;
+  }
+  
+  button.pricing-card__overlay-close--top {
+    position: absolute;
+    top: -40px;
+    right: 16px;
+    display: flex;
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+    border: none;
+    border-radius: 50%;
+    align-items: center;
+    background: #fff;
+    outline-color: #33475b;
+  }
+  
+  button.pricing-card__overlay-close--top svg {
+    fill: #7c98b6;
+  }
+  
+  button.pricing-card__overlay-close--top:hover svg,
+  button.pricing-card__overlay-close--top:focus svg {
+    fill: #33475b;
+  }
+  
+  @media screen and (min-width: 768px) {
+    button.pricing-card__overlay-close--top {
+      top: 16px;
+      right: 16px;
+      background: transparent;
+    }
+  }
+  
+  button.pricing-card__overlay-close--bottom {
+    position: absolute;
+    top: initial;
+    right: 16px;
+    bottom: 16px;
+    padding: 5px;
+    border: none;
+    background: none;
+    color: #33475b;
+    font-size: 14px;
+    font-weight: normal;
+    opacity: 0;
+    outline-color: #33475b;
+  }
+  
+  button.pricing-card__overlay-close--bottom:focus {
+    opacity: 1;
+  }
+  
+  .pricing-card__overlay .payments-iframe-container {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .pricing-card__overlay .payments-iframe-container iframe {
+    height: 100% !important; /* stylelint-disable-line declaration-no-important */
+  }
