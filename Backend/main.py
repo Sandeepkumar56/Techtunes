@@ -3,6 +3,10 @@ import mysql.connector
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime,date, time
+from send_mail import send_email
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 from fastapi import FastAPI
@@ -23,12 +27,6 @@ app.add_middleware(
     allow_methods=["*"],  # Allow all methods (GET, POST, PUT, DELETE, etc.)
     allow_headers=["*"],  # Allow all headers
 )
-
-
-
-
-
-
 
 class BookingDetailsBase(BaseModel):
     Name: str
@@ -65,11 +63,49 @@ async def booking_det(booking_details:BookingDetailsBase):
                 VALUES (%s,%s,%s,%s,%s,%s);
                 '''
         cursor.execute(query,insert_data_tuple)
+        # send_email("theuntoldlegends5556@gmail.com",serialized_data["email"])
+        sender_email = "sandeepn.20.becs@acharya.ac.in"
+        receiver_email =serialized_data["email"] 
+        subject = "Booking Confirmation"
+        message = "Your Booking has been confirmed."
+
+        # Gmail SMTP server configuration
+        smtp_server = "smtp.gmail.com"
+        smtp_port = 587  # Port for TLS encryption
+
+        # Login credentials (generally, you should use environment variables or a secure method to store these)
+        smtp_username = "sandeepn.20.becs@acharya.ac.in"
+        smtp_password = "Sandeep5556@1"  # If you're using 2-factor authentication, use an App Password here
+
+        # Create message
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = receiver_email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(message, 'plain'))
+
+        try:
+            # Establish a secure session with Gmail's outgoing SMTP server using your gmail account
+            server = smtplib.SMTP(smtp_server, smtp_port)
+            server.starttls()  # Upgrade the connection to secure (TLS) mode
+            server.login(smtp_username, smtp_password)  # Login with your Gmail address and App Password
+
+            # Send email
+            server.sendmail(sender_email, receiver_email, msg.as_string())
+            print("Email sent successfully!")
+
+        except Exception as e:
+            print(f"Error: {e}")
+
+        finally:
+            # Close the server connection
+            server.quit()
+
         con.commit()
         con.close()
     
     except  mysql.connector.Error as e:
         return {"error_code":e.errno,"error_msg":e.msg}
     
-    return {"msg":"booking alloted","reponse":serialized_data}
+    return {"msg":"booking alloted and confirmation mail will be sent","reponse":serialized_data}
     # return {"msg":"done"}
