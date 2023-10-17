@@ -16,7 +16,7 @@ def send_email(s_mail,r_mail):
     # Login credentials (generally, you should use environment variables or a secure method to store these)
     smtp_username = "your.email@gmail.com"
     smtp_password = "your-gmail-password"  # If you're using 2-factor authentication, use an App Password here
-
+        #if mail not working turn on permissoin for less secure apps in your gmail settings                                                
     # Create message
     msg = MIMEMultipart()
     msg['From'] = sender_email
